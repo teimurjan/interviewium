@@ -1,13 +1,20 @@
+import { useEffect, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import { routes } from "../content";
-import logo from '../../logo.png';
+import logo from "../../logo.png";
 
 export function Header() {
   const { pathname } = useLocation();
   const activeRoute = pathname.split("/").filter(Boolean)[0];
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    setMenuOpen(false);
+  }, [pathname]);
 
   return (
     <nav
+      className="site-header"
       style={{
         position: "sticky",
         top: 0,
@@ -43,7 +50,21 @@ export function Header() {
           Interviewium
         </span>
       </Link>
-      <div style={{ display: "flex", alignItems: "center", gap: 2, overflowX: "auto" }}>
+      <button
+        type="button"
+        className="site-menu-button"
+        aria-label="Toggle navigation menu"
+        aria-expanded={menuOpen}
+        onClick={() => setMenuOpen((open) => !open)}
+      >
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+        <span aria-hidden="true" />
+      </button>
+      <div
+        className={menuOpen ? "site-links is-open" : "site-links"}
+        style={{ display: "flex", alignItems: "center", gap: 2, overflowX: "auto" }}
+      >
         {routes.map((route) => (
           <NavItem key={route.slug} to={`/${route.slug}`} active={activeRoute === route.slug}>
             {route.label}

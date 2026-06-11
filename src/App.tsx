@@ -27,6 +27,7 @@ function Home() {
 
   return (
     <main
+      className="home-shell"
       style={{
         maxWidth: "var(--maxw)",
         margin: "0 auto",
@@ -35,9 +36,9 @@ function Home() {
       }}
     >
       <section
+        className="home-hero"
         style={{
           display: "grid",
-          gridTemplateColumns: "minmax(0, 1fr) 340px",
           gap: 36,
           alignItems: "stretch",
         }}
@@ -55,6 +56,7 @@ function Home() {
             <div style={{ maxWidth: 600 }}>
               <span className="eyebrow">Interviewium</span>
               <h1
+                className="home-title"
                 style={{
                   fontSize: 34,
                   lineHeight: 1.08,
@@ -106,6 +108,7 @@ function Home() {
         </div>
 
         <div
+          className="home-rhythm"
           style={{
             border: "1px solid var(--line)",
             background: "var(--surface)",
