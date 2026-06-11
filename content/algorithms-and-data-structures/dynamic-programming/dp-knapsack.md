@@ -4,6 +4,7 @@ emoji: 💰
 summary: Pack the sack for maximum worth.
 scene: In the vault, a thief weighs every jewel against a fixed-size sack, packing for maximum worth without bursting it.
 triggers: [subset sum, partition, coin change, target sum, capacity, choose items]
+viz: dp-knapsack
 order: 2
 ---
 

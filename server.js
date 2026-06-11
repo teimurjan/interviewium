@@ -31,9 +31,16 @@ async function createServer() {
     app.use(base, sirv(resolve("dist/client"), { extensions: [] }));
   }
 
-  app.use("*", async (req, res) => {
+  app.use("*", async (req, res, next) => {
+    const url = req.originalUrl;
+
+    // Only SSR-render HTML navigations. Requests with a file extension
+    // (.json, .ico, .map, …) must not hit transformIndexHtml, which routes
+    // them through vite:json and throws "Failed to parse JSON file." — this
+    // is what DevTools' /.well-known/...json polling spams in dev.
+    if (path.extname(url.split("?")[0])) return next();
+
     try {
-      const url = req.originalUrl;
 
       let template;
       let render;

@@ -4,6 +4,7 @@ emoji: 🪟
 summary: A glass pane slides across the counter.
 scene: A massive pane of glass slides across the marble counter, framing exactly the dishes that matter right now.
 triggers: [substring, subarray, contiguous, longest, shortest, at most k, window]
+viz: sliding-window
 order: 3
 ---
 

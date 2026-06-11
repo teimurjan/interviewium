@@ -4,6 +4,7 @@ emoji: 🔎
 summary: Match characters without re-reading the hallway.
 scene: A detective marks each matching footprint, then jumps ahead using what the earlier footprints already proved.
 triggers: [substring search, pattern, repeated string, palindrome, rolling hash, KMP]
+viz: string-matching
 order: 2
 ---
 

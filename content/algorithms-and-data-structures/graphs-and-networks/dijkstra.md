@@ -4,6 +4,7 @@ emoji: 🧭
 summary: Always extend the cheapest route first.
 scene: From the observatory dome, a navigator always charts the cheapest unexplored route across the star-map first.
 triggers: [shortest path, weighted, minimum cost, cheapest, non-negative weights, fastest]
+viz: dijkstra
 order: 5
 ---
 

@@ -4,6 +4,7 @@ emoji: 🧮
 summary: A grid of solved decisions.
 scene: A chessboard ledger fills square by square, each answer borrowing from its left, top, or diagonal neighbor.
 triggers: [grid paths, edit distance, longest common subsequence, matrix, two strings]
+viz: dp-2d
 order: 3
 ---
 

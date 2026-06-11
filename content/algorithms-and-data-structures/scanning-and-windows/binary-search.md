@@ -4,6 +4,7 @@ emoji: 🪓
 summary: The Executioner halves it every time.
 scene: A hooded executioner cleaves every problem clean in half — again, and again, and again.
 triggers: [sorted, minimum possible, maximum possible, feasible?, monotonic, find the boundary]
+viz: binary-search
 order: 1
 ---
 

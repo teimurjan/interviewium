@@ -4,6 +4,7 @@ emoji: 🪢
 summary: A merchant ropes islands together.
 scene: A weathered rope merchant lashes scattered islands together; ask him if two isles connect and he tugs one rope.
 triggers: [connected?, groups, merge accounts, number of provinces, redundant connection, dynamic connectivity]
+viz: union-find
 order: 3
 ---
 

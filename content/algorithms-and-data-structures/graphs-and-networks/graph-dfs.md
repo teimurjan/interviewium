@@ -4,6 +4,7 @@ emoji: 🕯️
 summary: Down each tunnel to its dead end.
 scene: A lone explorer descends into the catacombs, following each tunnel to its dead end by candlelight before turning back.
 triggers: [connected components, islands, flood fill, cycle in graph, reachable, regions]
+viz: graph-dfs
 order: 1
 ---
 

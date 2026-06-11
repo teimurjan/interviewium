@@ -4,6 +4,7 @@ emoji: 🗃️
 summary: Every key has a labeled drawer.
 scene: A clerk opens labeled drawers instantly, adding one tally mark for every matching key.
 triggers: [frequency, count, anagram, two sum, seen before, lookup]
+viz: hash-map
 order: 1
 ---
 

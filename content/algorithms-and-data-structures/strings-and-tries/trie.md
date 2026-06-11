@@ -4,6 +4,7 @@ emoji: 🌲
 summary: Each letter opens the next branch.
 scene: A word tree fills the library wall; every letter chooses a branch until a complete word is marked.
 triggers: [prefix, autocomplete, dictionary, word search, startsWith, wildcard]
+viz: trie
 order: 1
 ---
 

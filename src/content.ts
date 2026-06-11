@@ -25,6 +25,7 @@ export interface Pattern {
   summary: string; // short card subtitle
   triggers: string[];
   order: number;
+  viz?: string; // optional visualization key → src/visualizations/<viz>.tsx
   body: string; // markdown body
   routeSlug: string;
   categorySlug: string;
@@ -113,6 +114,7 @@ function buildTree(): Route[] {
       summary: String(data.summary ?? ""),
       triggers: asStringArray(data.triggers),
       order: Number(data.order ?? Number.POSITIVE_INFINITY),
+      viz: typeof data.viz === "string" ? data.viz : undefined,
       body: content.trim(),
       routeSlug,
       categorySlug,

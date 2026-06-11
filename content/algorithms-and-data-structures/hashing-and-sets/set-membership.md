@@ -4,6 +4,7 @@ emoji: 🧿
 summary: A guard recognizes every forbidden token.
 scene: A gate guard checks each token against a short forbidden list and waves through only unseen visitors.
 triggers: [unique, duplicate, contains, visited, membership, intersection]
+viz: set-membership
 order: 2
 ---
 

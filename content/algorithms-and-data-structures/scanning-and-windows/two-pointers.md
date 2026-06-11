@@ -4,6 +4,7 @@ emoji: ⚔️
 summary: Two knights close from both ends.
 scene: Two armoured knights march from opposite ends of a long banquet table, closing in until they meet.
 triggers: [sorted array, pair / triplet, two sum, palindrome, remove duplicates, opposite ends]
+viz: two-pointers
 order: 2
 ---
 

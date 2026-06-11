@@ -4,6 +4,7 @@ emoji: 🍽️
 summary: A teetering stack of plates.
 scene: A towering stack of porcelain plates on the cellar stairs — you can only ever touch the top one.
 triggers: [matching, valid parentheses, nested, undo, last seen, balanced]
+viz: stack
 order: 1
 ---
 

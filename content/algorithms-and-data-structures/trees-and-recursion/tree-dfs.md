@@ -4,6 +4,7 @@ emoji: 📚
 summary: Down one shelf to the floor, then the next.
 scene: A scholar plunges down one towering bookshelf to the very floor before ever sidestepping to the next aisle.
 triggers: [path, depth, root-to-leaf, subtree, diameter, ancestor]
+viz: tree-dfs
 order: 1
 ---
 

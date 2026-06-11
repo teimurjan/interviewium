@@ -4,6 +4,7 @@ emoji: 🧹
 summary: Sweep chaos into useful order.
 scene: A steward sorts scattered invitations by time, name, and priority until every later choice becomes obvious.
 triggers: [sort, ordered, lexicographic, earliest, latest, compare, greedy]
+viz: sorting
 order: 1
 ---
 

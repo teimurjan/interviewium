@@ -4,6 +4,7 @@ emoji: 🛠️
 summary: Fit each part before what needs it.
 scene: On the workshop bench, every part must be fitted before the part that depends on it — assembly in strict order.
 triggers: [prerequisites, ordering, course schedule, dependencies, build order, DAG]
+viz: topological-sort
 order: 4
 ---
 

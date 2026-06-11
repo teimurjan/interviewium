@@ -4,6 +4,7 @@ emoji: 🍷
 summary: Bottles racked in strict order.
 scene: A fastidious sommelier keeps the rack strictly ascending — any shorter bottle behind a taller one gets pulled.
 triggers: [next greater, next smaller, warmer temperature, histogram, span, nearest larger]
+viz: monotonic-stack
 order: 2
 ---
 

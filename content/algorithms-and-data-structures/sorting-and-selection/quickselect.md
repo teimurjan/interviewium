@@ -4,6 +4,7 @@ emoji: 🎯
 summary: Partition until the target rank is fixed.
 scene: An archer splits the field around one target, discarding every side that cannot contain the kth mark.
 triggers: [kth largest, kth smallest, top k, median, rank, selection]
+viz: quickselect
 order: 2
 ---
 

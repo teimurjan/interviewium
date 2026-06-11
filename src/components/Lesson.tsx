@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 import type { Category, Pattern, Route } from "../content";
 import { Trigger } from "./atoms";
 import { Markdown } from "./Markdown";
+import { Visualization } from "./Visualization";
 
 export function Lesson({ route, category, pattern }: { route: Route; category: Category; pattern: Pattern }) {
   const navigate = useNavigate();
@@ -171,6 +172,9 @@ export function Lesson({ route, category, pattern }: { route: Route; category: C
             </div>
           </section>
         )}
+
+        {/* optional inline visualization */}
+        {pattern.viz && <Visualization slug={pattern.viz} />}
 
         {/* lesson body */}
         <Markdown source={pattern.body} />

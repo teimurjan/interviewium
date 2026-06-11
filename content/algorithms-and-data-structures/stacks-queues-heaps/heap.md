@@ -4,6 +4,7 @@ emoji: 🕶️
 summary: A bouncer keeps only the top K.
 scene: A velvet-suited bouncer guards the VIP lounge, admitting only the top-K guests and ejecting the rest at the door.
 triggers: [top k, k largest, k smallest, median, stream, closest, merge k]
+viz: heap
 order: 4
 ---
 

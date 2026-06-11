@@ -4,6 +4,7 @@ emoji: 🚂
 summary: Coupled carriages, forward only.
 scene: A train of carriages stretches down the corridor; you can only walk forward, car to coupled car.
 triggers: [reverse list, cycle, middle node, nth from end, merge lists, fast & slow]
+viz: linked-list
 order: 5
 ---
 

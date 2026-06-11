@@ -4,6 +4,7 @@ emoji: 🎟️
 summary: A first-come-first-served line.
 scene: A velvet-roped line of guests in the waiting room — first to arrive is first to be seen, no cutting.
 triggers: [FIFO, level by level, first come first served, moving average, recent counter]
+viz: queue
 order: 3
 ---
 

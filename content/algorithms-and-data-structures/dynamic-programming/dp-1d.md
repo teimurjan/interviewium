@@ -4,6 +4,7 @@ emoji: 🗂️
 summary: Every answer already filed away.
 scene: An archivist sits walled in by thousands of already-solved index cards — every new question, he just reaches back.
 triggers: [ways to, max / min over choices, climbing stairs, house robber, decode, longest increasing]
+viz: dp-1d
 order: 1
 ---
 

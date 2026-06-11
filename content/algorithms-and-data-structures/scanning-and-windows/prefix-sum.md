@@ -4,6 +4,7 @@ emoji: 🧾
 summary: An accountant's running receipt.
 scene: A meticulous accountant tapes a running receipt down the pantry wall — any range total is just one subtraction.
 triggers: [range sum, subarray sum equals k, count of subarrays, cumulative, between i and j]
+viz: prefix-sum
 order: 4
 ---
 

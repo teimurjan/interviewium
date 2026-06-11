@@ -4,6 +4,7 @@ emoji: 🌿
 summary: Light every level before the next.
 scene: Glass tiers of the conservatory light up one level at a time, every plant on a floor before the next floor wakes.
 triggers: [level order, by level, shortest depth, right side view, zigzag, per row]
+viz: tree-bfs
 order: 2
 ---
 

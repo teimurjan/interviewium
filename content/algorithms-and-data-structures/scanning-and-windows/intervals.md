@@ -4,6 +4,7 @@ emoji: 📅
 summary: Overlapping calendars, sorted & stapled.
 scene: Dozens of overlapping calendar pages flutter in the sunlight; a steward sorts them by start, then staples the overlaps.
 triggers: [intervals, overlap, merge, meeting rooms, schedule, start / end times]
+viz: intervals
 order: 5
 ---
 

@@ -4,6 +4,7 @@ emoji: 🌉
 summary: Connect every island as cheaply as possible.
 scene: Bridge builders sort every possible bridge by price and accept only bridges that join separate islands.
 triggers: [connect all, minimum cost, spanning tree, Kruskal, Prim, edges]
+viz: minimum-spanning-tree
 order: 7
 ---
 

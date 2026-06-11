@@ -4,6 +4,7 @@ emoji: 🧊
 summary: Distance spreads across cells.
 scene: Frost spreads from several tiles at once, freezing each neighboring tile exactly one minute later.
 triggers: [matrix, grid, shortest path, nearest cell, rotten oranges, walls]
+viz: grid-bfs
 order: 6
 ---
 

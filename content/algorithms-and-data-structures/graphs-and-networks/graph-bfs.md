@@ -4,6 +4,7 @@ emoji: 📡
 summary: Signal ripples outward, ring by ring.
 scene: A radio tower in the attic pulses signal outward ring by ring — the nearest rooftops light first, the farthest last.
 triggers: [shortest path, fewest steps, minimum moves, unweighted, nearest, spread]
+viz: graph-bfs
 order: 2
 ---
 
