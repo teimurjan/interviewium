@@ -1,0 +1,4 @@
+label: Hashing & Sets
+blurb: Constant-time lookup, counts, and membership.
+tint: order
+order: 6

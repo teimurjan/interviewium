@@ -1,0 +1,6 @@
+label: Coding Challenges
+order: 2
+tagline: Build the thing with the right small abstraction.
+intro: >-
+  Common implementation prompts grouped by shape, with concise TypeScript
+  approaches for state, iteration, and API design.

@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Interviewium</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='9' fill='%233a5bd0'/%3E%3Ctext x='16' y='23' font-size='20' text-anchor='middle' fill='white'%3E%E2%97%90%3C/text%3E%3C/svg%3E" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Newsreader:ital,opsz,wght@0,6..72,400;0,6..72,500;1,6..72,400&family=Hanken+Grotesk:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    /* warm paper neutrals */
+    --paper: #f3f1ec;
+    --surface: #ffffff;
+    --surface-2: #faf8f4;
+    --ink: #222420;
+    --ink-2: #5d5f58;
+    --ink-3: #93948c;
+    --line: #e6e3da;
+    --line-2: #efece4;
+
+    /* one confident accent + functional hues (calm, muted) */
+    --accent: #3a5bd0;
+    --accent-ink: #2c47a8;
+    --accent-soft: #eaeefb;
+    --accent-line: #c7d2f4;
+    --correct: #1f8f5f;
+    --correct-soft: #e6f3ec;
+    --wrong: #c5604c;
+    --wrong-soft: #f7e9e5;
+    --warn: #b9852a;
+    --warn-soft: #f6eedd;
+
+    /* category tints (soft pastels) */
+    --c-scan: #e9eef8;     --c-scan-ink: #3a5bd0;
+    --c-order: #e7f1ec;    --c-order-ink: #2c8a63;
+    --c-trees: #f4eee1;    --c-trees-ink: #a9772c;
+    --c-graphs: #f5e9e7;   --c-graphs-ink: #b65a48;
+    --c-dp: #eee9f5;       --c-dp-ink: #6a55b0;
+
+    --radius: 16px;
+    --radius-sm: 11px;
+    --maxw: 1080px;
+    --readw: 760px;
+    --sans: "Hanken Grotesk", system-ui, sans-serif;
+    --serif: "Newsreader", Georgia, serif;
+    --mono: "JetBrains Mono", ui-monospace, monospace;
+    --shadow-sm: 0 1px 2px rgba(40,38,32,0.05), 0 1px 1px rgba(40,38,32,0.03);
+    --shadow: 0 1px 2px rgba(40,38,32,0.05), 0 14px 30px -22px rgba(40,38,32,0.28);
+    --shadow-lg: 0 2px 4px rgba(40,38,32,0.05), 0 30px 60px -32px rgba(40,38,32,0.32);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+    min-height: 100vh;
+    line-height: 1.5;
+  }
+  ::selection { background: var(--accent-soft); color: var(--accent-ink); }
+
+  ::-webkit-scrollbar { width: 12px; height: 12px; }
+  ::-webkit-scrollbar-track { background: transparent; }
+  ::-webkit-scrollbar-thumb { background: #d8d5cc; border-radius: 20px; border: 3px solid var(--paper); background-clip: padding-box; }
+  ::-webkit-scrollbar-thumb:hover { background: #c7c4ba; background-clip: padding-box; }
+
+  h1, h2, h3, h4 { margin: 0; font-weight: 600; }
+  p { margin: 0; }
+  a { color: inherit; text-decoration: none; }
+  button { font-family: inherit; cursor: pointer; color: inherit; }
+  button:focus-visible, a:focus-visible, [tabindex]:focus-visible { outline: 2.5px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+
+  .serif { font-family: var(--serif); font-weight: 400; }
+  .mono { font-family: var(--mono); }
+  .eyebrow {
+    font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase;
+    color: var(--ink-3);
+  }
+
+  #root { min-height: 100vh; }
+
+  /* rendered-markdown lesson body — calm editorial prose */
+  .prose { color: var(--ink); }
+  .prose > :first-child { margin-top: 0; }
+  .prose h2, .prose h3 {
+    font-family: var(--sans); font-weight: 700; letter-spacing: -0.01em;
+    margin: 40px 0 16px; line-height: 1.25;
+  }
+  .prose h2 { font-size: 22px; }
+  .prose h3 { font-size: 18px; }
+  .prose p { font-size: 15.5px; color: var(--ink-2); line-height: 1.65; margin: 14px 0; }
+  .prose ul, .prose ol { margin: 14px 0; padding: 0; list-style: none; display: flex; flex-direction: column; gap: 10px; }
+  .prose li { font-size: 15.5px; line-height: 1.55; color: var(--ink); padding-left: 34px; position: relative; }
+  .prose ul > li::before {
+    content: ""; position: absolute; left: 9px; top: 10px; width: 6px; height: 6px;
+    border-radius: 2px; background: var(--accent);
+  }
+  .prose ol { counter-reset: step; }
+  .prose ol > li { counter-increment: step; }
+  .prose ol > li::before {
+    content: counter(step); position: absolute; left: 0; top: 1px;
+    width: 24px; height: 24px; border-radius: 7px; background: var(--accent-soft);
+    color: var(--accent-ink); display: grid; place-items: center;
+    font-size: 12.5px; font-weight: 700; font-family: var(--sans);
+  }
+  .prose a { color: var(--accent-ink); text-decoration: underline; text-underline-offset: 2px; }
+  .prose strong { font-weight: 700; }
+  .prose code {
+    font-family: var(--mono); font-size: 0.88em; background: var(--surface-2);
+    border: 1px solid var(--line); border-radius: 5px; padding: 1px 5px;
+  }
+  .prose pre {
+    margin: 16px 0; padding: 15px 16px; border-radius: var(--radius-sm);
+    border: 1px solid var(--line); background: var(--surface-2);
+    overflow-x: auto;
+  }
+  .prose pre code {
+    font-family: var(--mono); font-size: 12.8px; line-height: 1.65; color: var(--ink);
+    background: none; border: none; padding: 0; white-space: pre;
+  }
+  .prose pre code.language-ts,
+  .prose pre code.language-typescript { color: #24292f; }
+  .tok-keyword { color: #8a3ffc; font-weight: 600; }
+  .tok-type { color: #0f6b7a; }
+  .tok-string { color: #8a4b08; }
+  .tok-literal { color: #9a3412; font-weight: 600; }
+  .tok-comment { color: #7a8175; font-style: italic; }
+  .prose blockquote {
+    margin: 16px 0; padding: 13px 16px; border-radius: var(--radius-sm);
+    background: var(--wrong-soft); color: var(--ink);
+  }
+  .prose blockquote p { color: var(--ink); font-size: 14.5px; margin: 0; }
+  .prose hr { border: none; border-top: 1px solid var(--line); margin: 32px 0; }
+
+  @keyframes riseIn { from { transform: translateY(10px); } to { transform: none; } }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.001ms !important; transition-duration: 0.001ms !important; }
+  }
+</style>
+</head>
+<body>
+  <div id="root"><!--app-html--></div>
+  <script type="module" src="/src/entry-client.tsx"></script>
+</body>
+</html>

@@ -1,0 +1,4 @@
+label: Iterators & Streams
+blurb: Pull values lazily and predictably.
+tint: scan
+order: 2

@@ -1,0 +1,6 @@
+label: Algorithms & Data Structures
+order: 1
+tagline: See the pattern before you solve it.
+intro: >-
+  Core interview patterns, each anchored to a mnemonic and a TypeScript template.
+  Study the signal, then recall the shape until naming the pattern is instant.
