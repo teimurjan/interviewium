@@ -1,8 +1,10 @@
 import { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { copyText } from "../clipboard";
 import type { Category, Pattern, Route } from "../content";
 import { Trigger } from "./atoms";
 import { Markdown } from "./Markdown";
+import { PracticeCard } from "./PracticeCard";
 import { Visualization } from "./Visualization";
 
 export function Lesson({ route, category, pattern }: { route: Route; category: Category; pattern: Pattern }) {
@@ -173,6 +175,9 @@ export function Lesson({ route, category, pattern }: { route: Route; category: C
           </section>
         )}
 
+        {/* practice with an AI trainer */}
+        <PracticeCard route={route} category={category} pattern={pattern} />
+
         {/* optional inline visualization */}
         {pattern.viz && <Visualization slug={pattern.viz} />}
 
@@ -196,23 +201,6 @@ function toMarkdown(route: Route, category: Category, pattern: Pattern): string 
 
   parts.push(pattern.body);
   return parts.join("\n\n");
-}
-
-async function copyText(text: string): Promise<void> {
-  if (navigator.clipboard?.writeText) {
-    await navigator.clipboard.writeText(text);
-    return;
-  }
-
-  const textarea = document.createElement("textarea");
-  textarea.value = text;
-  textarea.setAttribute("readonly", "");
-  textarea.style.position = "fixed";
-  textarea.style.opacity = "0";
-  document.body.appendChild(textarea);
-  textarea.select();
-  document.execCommand("copy");
-  textarea.remove();
 }
 
 function NavBtn({ onClick, label, children }: { onClick: () => void; label: string; children: React.ReactNode }) {
