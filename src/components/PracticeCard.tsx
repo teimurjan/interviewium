@@ -17,6 +17,23 @@ const PROVIDERS: Provider[] = [
 
 function buildTrainerPrompt(route: Route, category: Category, pattern: Pattern): string {
   const signals = pattern.triggers.length ? pattern.triggers.join(", ") : "—";
+
+  // AI & ML topics are conceptual — drill them as a mock interview, not a coding problem.
+  if (route.slug === "ai-and-ml") {
+    return [
+      `You are my ML/AI interview coach for the "${pattern.title}" topic (group: ${category.label}, track: ${route.label}).`,
+      `Key signals for this topic: ${signals}.`,
+      "",
+      "Run an interactive mock interview. I will only ever reply with one of these:",
+      `- "Next" — ask me one focused interview question on this topic (conceptual, mathematical, or applied/system-design). Do not reveal the answer. Escalate depth as I succeed.`,
+      `- "Hint" — give one small nudge toward the current question. No full answer.`,
+      `- "Lost" — give the strong 30-second answer plus the key formula or intuition, then continue.`,
+      `- (my answer) — anything else is my attempt: grade it, correct any misconception, surface the common pitfall, and tell me what a top answer adds.`,
+      "",
+      "Keep replies tight. Use TypeScript for any code. Begin now with the first question.",
+    ].join("\n");
+  }
+
   return [
     `You are my coding-interview trainer for the "${pattern.title}" pattern (category: ${category.label}, track: ${route.label}).`,
     `Signal words for this pattern: ${signals}.`,
@@ -33,6 +50,7 @@ function buildTrainerPrompt(route: Route, category: Category, pattern: Pattern):
 
 export function PracticeCard({ route, category, pattern }: { route: Route; category: Category; pattern: Pattern }) {
   const [copied, setCopied] = useState(false);
+  const isConcept = route.slug === "ai-and-ml";
 
   const copyPrompt = async () => {
     try {
@@ -62,8 +80,8 @@ export function PracticeCard({ route, category, pattern }: { route: Route; categ
         Practice
       </div>
       <p style={{ fontSize: 15, color: "var(--ink-2)", lineHeight: 1.6, marginBottom: 16 }}>
-        Drill this pattern with an AI trainer — reply only with <strong>Hint</strong>, <strong>Next</strong>,{" "}
-        <strong>Lost</strong>, or paste your code.
+        {isConcept ? "Drill this topic with an AI interviewer" : "Drill this pattern with an AI trainer"} — reply only with{" "}
+        <strong>Hint</strong>, <strong>Next</strong>, <strong>Lost</strong>, or {isConcept ? "type your answer" : "paste your code"}.
       </p>
       <div style={{ display: "flex", flexWrap: "wrap", gap: 9 }}>
         {PROVIDERS.map((provider) => (

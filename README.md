@@ -9,7 +9,7 @@ The premise is simple: most coding interview questions reduce to a limited set o
 ## What is inside
 
 - Algorithms and data structures patterns
-- Coding challenge implementation prompts
+- Software engineering problems
 - TypeScript templates
 - Short pitfalls and recognition cues
 - Content-driven routing from markdown files
