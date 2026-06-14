@@ -14,14 +14,27 @@ order: 3
 2. Are you asked for longest / shortest / count under a constraint?
 3. Can you expand right, then shrink left while invalid?
 
-## Canonical template
+## Classic problem
+
+**Longest Substring Without Repeating Characters** (LeetCode 3) — return the length of the
+longest substring with all-distinct characters. Grow `right`, and shrink `left` until the
+window is valid again.
 
 ```ts
-let left = 0;
-for (let right = 0; right < a.length; right++) {
-  add(a[right]);
-  while (invalid()) remove(a[left++]);
-  best = Math.max(best, right - left + 1);
+function lengthOfLongestSubstring(s: string): number {
+  const window = new Set<string>();
+  let left = 0, best = 0;
+
+  for (let right = 0; right < s.length; right++) {
+    while (window.has(s[right])) {  // duplicate → shrink from the left first
+      window.delete(s[left]);
+      left++;
+    }
+    window.add(s[right]);
+    best = Math.max(best, right - left + 1);
+  }
+
+  return best;
 }
 ```
 

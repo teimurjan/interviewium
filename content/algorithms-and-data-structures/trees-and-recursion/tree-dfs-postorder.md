@@ -14,16 +14,36 @@ order: 3
 2. Tearing a tree **down** (delete/free) so children must go first?
 3. Recurse in order: left, then right, then visit — combine child results.
 
-## Canonical template
+## Classic problem
 
-Children return their answer, you combine and pass it up. Height is the archetype.
+**Diameter of Binary Tree** (LeetCode 543) — the longest path between any two nodes. Each
+node returns its height upward; the best path through a node is `left + right`.
 
 ```ts
-function height(node: TreeNode | null): number {
-  if (!node) return 0;
-  const left = height(node.left);
-  const right = height(node.right);
-  return 1 + Math.max(left, right); // combine, on the way back up
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val = 0, left: TreeNode | null = null, right: TreeNode | null = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function diameterOfBinaryTree(root: TreeNode | null): number {
+  let best = 0;
+
+  function height(node: TreeNode | null): number {
+    if (!node) return 0;
+    const left = height(node.left);     // children answer first
+    const right = height(node.right);
+    best = Math.max(best, left + right); // path bending through this node
+    return 1 + Math.max(left, right);    // height bubbles up to the parent
+  }
+
+  height(root);
+  return best;
 }
 ```
 

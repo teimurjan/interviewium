@@ -14,19 +14,23 @@ order: 1
 2. Are counts, frequencies, or complements central to the answer?
 3. Can one pass with a `Map` replace a nested scan?
 
-## Canonical template
+## Classic problem
+
+**Two Sum** (LeetCode 1) — return the indices of the two numbers in `nums` that add up
+to `target`. Store each value as you go and look up its complement.
 
 ```ts
-const count = new Map<number, number>();
-for (const x of nums) {
-  count.set(x, (count.get(x) ?? 0) + 1);
-}
+function twoSum(nums: number[], target: number): number[] {
+  const seen = new Map<number, number>(); // value → index
 
-for (const x of nums) {
-  const need = target - x;
-  if ((count.get(need) ?? 0) > 0) return true;
+  for (let i = 0; i < nums.length; i++) {
+    const need = target - nums[i];
+    if (seen.has(need)) return [seen.get(need)!, i]; // complement already passed
+    seen.set(nums[i], i);
+  }
+
+  return []; // problem guarantees one answer, but stay total
 }
-return false;
 ```
 
 ## Common pitfalls

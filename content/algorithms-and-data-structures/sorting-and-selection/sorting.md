@@ -14,16 +14,25 @@ order: 1
 2. Is a custom comparator the core of the problem?
 3. After sorting, can you solve with one pass?
 
-## Canonical template
+## Classic problem
+
+**Largest Number** (LeetCode 179) — arrange the numbers to form the largest possible
+value. The whole problem is the comparator: `a` precedes `b` when `a + b` reads larger
+than `b + a`.
 
 ```ts
-items.sort((a, b) => a.start - b.start || a.end - b.end);
+function largestNumber(nums: number[]): string {
+  const parts = nums.map(String);
 
-let best = 0;
-for (const item of items) {
-  best = Math.max(best, score(item));
+  parts.sort((a, b) => {
+    if (a + b > b + a) return -1; // a first makes the bigger number
+    if (a + b < b + a) return 1;
+    return 0;
+  });
+
+  if (parts[0] === "0") return "0"; // all zeros → avoid "000"
+  return parts.join("");
 }
-return best;
 ```
 
 ## Common pitfalls

@@ -14,15 +14,26 @@ order: 1
 2. Need the most-recent unmatched thing?
 3. Evaluate or simplify left-to-right with backtracking of one step?
 
-## Canonical template
+## Classic problem
+
+**Valid Parentheses** (LeetCode 20) — is a string of `()[]{}` correctly matched? Push each
+opener; on a closer, the top must be its partner.
 
 ```ts
-const stack: string[] = [];
-for (const ch of s) {
-  if (opens.has(ch)) stack.push(ch);
-  else if (!stack.length || stack.pop() !== match[ch]) return false;
+function isValid(s: string): boolean {
+  const partner: Record<string, string> = { ")": "(", "]": "[", "}": "{" };
+  const stack: string[] = [];
+
+  for (const ch of s) {
+    if (ch === "(" || ch === "[" || ch === "{") {
+      stack.push(ch);
+    } else if (stack.pop() !== partner[ch]) {
+      return false; // wrong opener on top, or stack was empty (pop → undefined)
+    }
+  }
+
+  return stack.length === 0; // leftover openers → unbalanced
 }
-return stack.length === 0;
 ```
 
 ## Common pitfalls

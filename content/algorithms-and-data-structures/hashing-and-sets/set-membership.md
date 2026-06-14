@@ -14,15 +14,22 @@ order: 2
 2. Do you need uniqueness, intersection, or visited state?
 3. Can membership checks be O(1)?
 
-## Canonical template
+## Classic problem
+
+**Contains Duplicate** (LeetCode 217) — return `true` if any value in `nums` appears more
+than once. Track what you've seen; bail the moment a value repeats.
 
 ```ts
-const seen = new Set<string>();
-for (const item of items) {
-  if (seen.has(item)) return true;
-  seen.add(item);
+function containsDuplicate(nums: number[]): boolean {
+  const seen = new Set<number>();
+
+  for (const num of nums) {
+    if (seen.has(num)) return true; // second sighting → duplicate
+    seen.add(num);
+  }
+
+  return false;
 }
-return false;
 ```
 
 ## Common pitfalls

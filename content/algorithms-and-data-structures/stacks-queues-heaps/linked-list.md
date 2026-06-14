@@ -14,18 +14,34 @@ order: 5
 2. Cycle / middle → fast & slow pointers.
 3. A dummy head simplifies edge cases.
 
-## Canonical template
+## Classic problem
+
+**Reverse Linked List** (LeetCode 206) — reverse a singly linked list and return the new
+head. Walk forward, flipping each `next` pointer to point back at the node behind it.
 
 ```ts
-let prev: ListNode | null = null;
-let cur = head;
-while (cur) {
-  const next = cur.next;
-  cur.next = prev;
-  prev = cur;
-  cur = next;
+class ListNode {
+  val: number;
+  next: ListNode | null;
+  constructor(val = 0, next: ListNode | null = null) {
+    this.val = val;
+    this.next = next;
+  }
 }
-return prev;
+
+function reverseList(head: ListNode | null): ListNode | null {
+  let prev: ListNode | null = null;
+  let cur = head;
+
+  while (cur) {
+    const next = cur.next; // save before we overwrite the link
+    cur.next = prev;       // flip the pointer backwards
+    prev = cur;
+    cur = next;
+  }
+
+  return prev; // prev is the old tail = new head
+}
 ```
 
 ## Common pitfalls

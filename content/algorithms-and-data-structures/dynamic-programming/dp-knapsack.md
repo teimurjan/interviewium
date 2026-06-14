@@ -14,16 +14,29 @@ order: 2
 2. Coin change / partition / subset-sum?
 3. `dp` over (item, remaining capacity).
 
-## Canonical template
+## Classic problem
+
+**Partition Equal Subset Sum** (LeetCode 416) — can `nums` be split into two subsets
+with equal sums? That is 0/1 subset-sum for a target of `total / 2`.
 
 ```ts
-const dp = Array(cap + 1).fill(0);
-for (const [weight, value] of items) {
-  for (let c = cap; c >= weight; c--) {
-    dp[c] = Math.max(dp[c], dp[c - weight] + value);
+function canPartition(nums: number[]): boolean {
+  const total = nums.reduce((sum, n) => sum + n, 0);
+  if (total % 2 !== 0) return false;          // odd total can't split evenly
+  const target = total / 2;
+
+  // dp[c] = can we hit sum c using items seen so far?
+  const dp = new Array<boolean>(target + 1).fill(false);
+  dp[0] = true;
+
+  for (const num of nums) {
+    for (let c = target; c >= num; c--) {     // descend so each item is used once
+      dp[c] = dp[c] || dp[c - num];
+    }
   }
+
+  return dp[target];
 }
-return dp[cap];
 ```
 
 ## Common pitfalls

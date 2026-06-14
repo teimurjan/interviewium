@@ -14,30 +14,31 @@ order: 1
 2. Building a path **from the root** downward?
 3. Recurse in order: visit, then left, then right.
 
-## Canonical template
+## Classic problem
+
+**Path Sum** (LeetCode 112) — is there a root-to-leaf path summing to `targetSum`? Act on
+each node on the way down, subtracting its value, and check the balance at a leaf.
 
 ```ts
-function preorder(node: TreeNode | null, out: number[]): void {
-  if (!node) return;
-  out.push(node.val); // visit first, on the way down
-  preorder(node.left, out);
-  preorder(node.right, out);
-}
-```
-
-Same walk with an explicit stack — push right before left so left pops first.
-
-```ts
-function preorderIterative(root: TreeNode | null): number[] {
-  const out: number[] = [];
-  const stack: TreeNode[] = root ? [root] : [];
-  while (stack.length) {
-    const node = stack.pop()!;
-    out.push(node.val);
-    if (node.right) stack.push(node.right);
-    if (node.left) stack.push(node.left);
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val = 0, left: TreeNode | null = null, right: TreeNode | null = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
   }
-  return out;
+}
+
+function hasPathSum(root: TreeNode | null, targetSum: number): boolean {
+  if (!root) return false;
+
+  const remaining = targetSum - root.val;          // visit first, on the way down
+  if (!root.left && !root.right) return remaining === 0; // leaf → did it land on zero?
+
+  return hasPathSum(root.left, remaining) ||
+         hasPathSum(root.right, remaining);
 }
 ```
 
@@ -45,4 +46,4 @@ function preorderIterative(root: TreeNode | null): number[] {
 
 > Forgetting the null base case.
 
-> Pushing left before right in the iterative form — that reverses the order.
+> Checking the sum at a null child instead of a true leaf (double-counts paths).

@@ -14,13 +14,22 @@ order: 3
 2. Sliding max/min over a stream → monotonic deque.
 3. Often the engine inside BFS.
 
-## Canonical template
+## Classic problem
+
+**Number of Recent Calls** (LeetCode 933) — `ping(t)` returns how many calls happened in
+the last 3000 ms. Push each timestamp; drop ones that fell out of the window from the
+front.
 
 ```ts
-const q = [start];
-for (let head = 0; head < q.length; head++) {
-  const cur = q[head];
-  for (const nxt of neighbors(cur)) q.push(nxt);
+class RecentCounter {
+  private queue: number[] = []; // timestamps, oldest first
+  private head = 0;             // front index — avoids O(n) shift()
+
+  ping(t: number): number {
+    this.queue.push(t);
+    while (this.queue[this.head] < t - 3000) this.head++; // expire stale calls
+    return this.queue.length - this.head;
+  }
 }
 ```
 

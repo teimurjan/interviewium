@@ -14,22 +14,39 @@ order: 3
 2. Count components as edges arrive?
 3. Find with path compression, union by rank.
 
-## Canonical template
+## Classic problem
+
+**Number of Provinces** (LeetCode 547) — `isConnected[i][j] === 1` means cities `i` and
+`j` are directly linked. Count the connected groups. Start with `n` groups and merge.
 
 ```ts
-function find(x: number): number {
-  while (parent[x] !== x) {
-    parent[x] = parent[parent[x]];
-    x = parent[x];
-  }
-  return x;
-}
+function findCircleNum(isConnected: number[][]): number {
+  const n = isConnected.length;
+  const parent = Array.from({ length: n }, (_, i) => i);
+  let provinces = n;
 
-function union(a: number, b: number): boolean {
-  const ra = find(a), rb = find(b);
-  if (ra === rb) return false;
-  parent[ra] = rb;
-  return true;
+  const find = (x: number): number => {
+    while (parent[x] !== x) {
+      parent[x] = parent[parent[x]]; // path compression: halve the chain
+      x = parent[x];
+    }
+    return x;
+  };
+
+  const union = (a: number, b: number): void => {
+    const ra = find(a), rb = find(b);
+    if (ra === rb) return;           // already same group
+    parent[ra] = rb;
+    provinces--;                     // two groups became one
+  };
+
+  for (let i = 0; i < n; i++) {
+    for (let j = i + 1; j < n; j++) {
+      if (isConnected[i][j] === 1) union(i, j);
+    }
+  }
+
+  return provinces;
 }
 ```
 

@@ -14,19 +14,34 @@ order: 5
 2. Permutations / combinations / subsets / placements?
 3. Choose → recurse → un-choose.
 
-## Canonical template
+## Classic problem
+
+**Permutations** (LeetCode 46) — return every ordering of a distinct `nums`. Pick an unused
+number, recurse, then put it back so the next branch can use it.
 
 ```ts
-function backtrack(path: Choice[], choices: Choice[]): void {
-  if (done(path)) {
-    res.push([...path]);
-    return;
+function permute(nums: number[]): number[][] {
+  const result: number[][] = [];
+  const path: number[] = [];
+  const used = new Array<boolean>(nums.length).fill(false);
+
+  function backtrack(): void {
+    if (path.length === nums.length) {
+      result.push([...path]); // copy — path keeps mutating
+      return;
+    }
+    for (let i = 0; i < nums.length; i++) {
+      if (used[i]) continue;
+      used[i] = true;
+      path.push(nums[i]);   // choose
+      backtrack();          // recurse
+      path.pop();           // un-choose
+      used[i] = false;
+    }
   }
-  for (const choice of choices) {
-    path.push(choice);
-    backtrack(path, nextChoices(choice));
-    path.pop();
-  }
+
+  backtrack();
+  return result;
 }
 ```
 

@@ -14,16 +14,27 @@ order: 3
 2. Are you comparing two strings or walking a grid?
 3. Does each cell depend on nearby solved cells?
 
-## Canonical template
+## Classic problem
+
+**Longest Common Subsequence** (LeetCode 1143) — return the length of the longest
+subsequence present in both strings `a` and `b`.
 
 ```ts
-const dp = Array.from({ length: m + 1 }, () => Array(n + 1).fill(0));
-for (let i = 1; i <= m; i++) {
-  for (let j = 1; j <= n; j++) {
-    dp[i][j] = best(dp[i - 1][j], dp[i][j - 1], dp[i - 1][j - 1]);
+function longestCommonSubsequence(a: string, b: string): number {
+  const m = a.length, n = b.length;
+  // dp[i][j] = LCS of a[0..i) and b[0..j); row/col 0 are the empty prefixes.
+  const dp = Array.from({ length: m + 1 }, () => new Array<number>(n + 1).fill(0));
+
+  for (let i = 1; i <= m; i++) {
+    for (let j = 1; j <= n; j++) {
+      dp[i][j] = a[i - 1] === b[j - 1]
+        ? dp[i - 1][j - 1] + 1                     // chars match → extend the diagonal
+        : Math.max(dp[i - 1][j], dp[i][j - 1]);    // drop one char from either string
+    }
   }
+
+  return dp[m][n];
 }
-return dp[m][n];
 ```
 
 ## Common pitfalls

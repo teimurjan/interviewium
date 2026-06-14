@@ -14,16 +14,41 @@ order: 4
 2. Min depth / level totals / row views?
 3. Queue, capturing `len(queue)` per level.
 
-## Canonical template
+## Classic problem
+
+**Binary Tree Level Order Traversal** (LeetCode 102) — return node values grouped by
+level. Snapshot the queue size before each level so you drain exactly one row at a time.
 
 ```ts
-const q = [root];
-for (let head = 0; head < q.length;) {
-  const levelEnd = q.length;
-  while (head < levelEnd) {
-    const node = q[head++];
-    for (const child of [node.left, node.right]) if (child) q.push(child);
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val = 0, left: TreeNode | null = null, right: TreeNode | null = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
   }
+}
+
+function levelOrder(root: TreeNode | null): number[][] {
+  if (!root) return [];
+  const levels: number[][] = [];
+  const queue: TreeNode[] = [root];
+
+  for (let head = 0; head < queue.length; ) {
+    const levelSize = queue.length - head; // freeze this row's count
+    const level: number[] = [];
+    for (let i = 0; i < levelSize; i++) {
+      const node = queue[head++];
+      level.push(node.val);
+      if (node.left) queue.push(node.left);
+      if (node.right) queue.push(node.right);
+    }
+    levels.push(level);
+  }
+
+  return levels;
 }
 ```
 

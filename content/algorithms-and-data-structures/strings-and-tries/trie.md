@@ -14,21 +14,47 @@ order: 1
 2. Is `startsWith` or dictionary pruning repeated?
 3. Would a tree of characters avoid repeated string scans?
 
-## Canonical template
+## Classic problem
+
+**Implement Trie (Prefix Tree)** (LeetCode 208) — support `insert`, `search`, and
+`startsWith`. Each node maps a character to a child; a flag marks where a word ends.
 
 ```ts
 class TrieNode {
   children = new Map<string, TrieNode>();
-  word = false;
+  isWord = false;
 }
 
-function insert(root: TrieNode, word: string): void {
-  let node = root;
-  for (const ch of word) {
-    if (!node.children.has(ch)) node.children.set(ch, new TrieNode());
-    node = node.children.get(ch)!;
+class Trie {
+  private root = new TrieNode();
+
+  insert(word: string): void {
+    let node = this.root;
+    for (const ch of word) {
+      if (!node.children.has(ch)) node.children.set(ch, new TrieNode());
+      node = node.children.get(ch)!;
+    }
+    node.isWord = true; // terminal marker
   }
-  node.word = true;
+
+  search(word: string): boolean {
+    const node = this.walk(word);
+    return node !== null && node.isWord; // full word, not just a prefix
+  }
+
+  startsWith(prefix: string): boolean {
+    return this.walk(prefix) !== null;
+  }
+
+  private walk(s: string): TrieNode | null {
+    let node = this.root;
+    for (const ch of s) {
+      const next = node.children.get(ch);
+      if (!next) return null;
+      node = next;
+    }
+    return node;
+  }
 }
 ```
 

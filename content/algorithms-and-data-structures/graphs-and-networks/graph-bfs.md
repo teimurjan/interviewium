@@ -14,19 +14,35 @@ order: 2
 2. Spread / infection / multi-source expansion?
 3. Queue, track distance per layer.
 
-## Canonical template
+## Classic problem
+
+**Shortest path in an unweighted graph** — given `n` nodes and an undirected
+`edges` list, return the fewest edges from `start` to `target`, or `-1`.
 
 ```ts
-const q: Array<[string, number]> = [[start, 0]];
-const seen = new Set([start]);
-for (let head = 0; head < q.length; head++) {
-  const [node, dist] = q[head];
-  for (const next of adj.get(node) ?? []) {
-    if (!seen.has(next)) {
-      seen.add(next);
-      q.push([next, dist + 1]);
+function shortestPath(n: number, edges: number[][], start: number, target: number): number {
+  const adj: number[][] = Array.from({ length: n }, () => []);
+  for (const [u, v] of edges) {
+    adj[u].push(v);
+    adj[v].push(u);
+  }
+
+  const seen = new Array<boolean>(n).fill(false);
+  const queue: Array<[number, number]> = [[start, 0]]; // [node, distance]
+  seen[start] = true;
+
+  for (let head = 0; head < queue.length; head++) {   // head index = O(1) dequeue
+    const [node, dist] = queue[head];
+    if (node === target) return dist;
+    for (const next of adj[node]) {
+      if (!seen[next]) {
+        seen[next] = true;          // mark on enqueue, not dequeue
+        queue.push([next, dist + 1]);
+      }
     }
   }
+
+  return -1;
 }
 ```
 

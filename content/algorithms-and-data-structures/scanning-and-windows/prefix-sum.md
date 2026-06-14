@@ -14,15 +14,24 @@ order: 4
 2. "Subarray summing to K" — pair with a hashmap of prefixes.
 3. Can a difference of two prefixes give the answer in O(1)?
 
-## Canonical template
+## Classic problem
+
+**Subarray Sum Equals K** (LeetCode 560) — count contiguous subarrays summing to `k`. A
+window `(i, j]` sums to `k` when `prefix[j] - prefix[i] === k`, so count earlier prefixes
+equal to `sum - k`.
 
 ```ts
-const pref = new Map<number, number>([[0, 1]]);
-let sum = 0, ans = 0;
-for (const x of a) {
-  sum += x;
-  ans += pref.get(sum - k) ?? 0;
-  pref.set(sum, (pref.get(sum) ?? 0) + 1);
+function subarraySum(nums: number[], k: number): number {
+  const counts = new Map<number, number>([[0, 1]]); // prefix sum → times seen
+  let sum = 0, total = 0;
+
+  for (const num of nums) {
+    sum += num;
+    total += counts.get(sum - k) ?? 0;              // earlier prefixes that close a window
+    counts.set(sum, (counts.get(sum) ?? 0) + 1);
+  }
+
+  return total;
 }
 ```
 

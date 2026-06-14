@@ -14,14 +14,39 @@ order: 2
 2. kth-smallest, validate-BST, in-order successor?
 3. Recurse in order: left, then visit, then right.
 
-## Canonical template
+## Classic problem
+
+**Kth Smallest Element in a BST** (LeetCode 230) — an inorder walk of a BST visits values
+in ascending order, so the kth value visited is the answer. The iterative form stops the
+moment it's found.
 
 ```ts
-function inorder(node: TreeNode | null, out: number[]): void {
-  if (!node) return;
-  inorder(node.left, out);
-  out.push(node.val); // visit between the two children
-  inorder(node.right, out);
+class TreeNode {
+  val: number;
+  left: TreeNode | null;
+  right: TreeNode | null;
+  constructor(val = 0, left: TreeNode | null = null, right: TreeNode | null = null) {
+    this.val = val;
+    this.left = left;
+    this.right = right;
+  }
+}
+
+function kthSmallest(root: TreeNode | null, k: number): number {
+  const stack: TreeNode[] = [];
+  let node = root;
+
+  while (node || stack.length) {
+    while (node) {           // dive to the leftmost unvisited node
+      stack.push(node);
+      node = node.left;
+    }
+    node = stack.pop()!;     // visit in sorted order
+    if (--k === 0) return node.val;
+    node = node.right;       // then the right subtree
+  }
+
+  return -1;
 }
 ```
 

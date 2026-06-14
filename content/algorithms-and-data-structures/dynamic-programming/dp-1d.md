@@ -14,16 +14,25 @@ order: 1
 2. Does the answer at `i` depend on a few earlier `i`'s?
 3. Define `dp[i]`, a recurrence, and a base case.
 
-## Canonical template
+## Classic problem
+
+**House Robber** (LeetCode 198) — given houses with `nums[i]` cash, take the maximum
+total without robbing two adjacent houses.
 
 ```ts
-const dp = Array(n + 1).fill(0);
-dp[0] = base0;
-dp[1] = base1;
-for (let i = 2; i <= n; i++) {
-  dp[i] = best(dp[i - 1], dp[i - 2] + a[i]);
+function rob(nums: number[]): number {
+  let skip = 0; // best loot ignoring the previous house
+  let take = 0; // best loot up to and including the previous house
+
+  for (const cash of nums) {
+    const robThis = skip + cash;       // rob here → must have skipped the last
+    const robLast = take;              // skip here → keep the previous best
+    skip = take;
+    take = Math.max(robThis, robLast);
+  }
+
+  return take;
 }
-return dp[n];
 ```
 
 ## Common pitfalls

@@ -14,15 +14,26 @@ order: 5
 2. Merge, count overlaps, or insert into a schedule?
 3. Sort by start (or by end for greedy selection).
 
-## Canonical template
+## Classic problem
+
+**Merge Intervals** (LeetCode 56) — merge all overlapping intervals. Sort by start, then
+extend the last kept interval whenever the next one overlaps it.
 
 ```ts
-intervals.sort((a, b) => a[0] - b[0]);
-const merged: number[][] = [intervals[0]];
-for (const [start, end] of intervals.slice(1)) {
-  const last = merged[merged.length - 1];
-  if (start <= last[1]) last[1] = Math.max(last[1], end);
-  else merged.push([start, end]);
+function merge(intervals: number[][]): number[][] {
+  intervals.sort((a, b) => a[0] - b[0]);
+
+  const merged: number[][] = [];
+  for (const [start, end] of intervals) {
+    const last = merged[merged.length - 1];
+    if (last && start <= last[1]) {
+      last[1] = Math.max(last[1], end); // overlap → stretch the current interval
+    } else {
+      merged.push([start, end]);        // gap → start a fresh interval
+    }
+  }
+
+  return merged;
 }
 ```
 
