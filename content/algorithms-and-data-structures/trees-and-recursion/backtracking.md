@@ -5,7 +5,7 @@ summary: Try a path, then undo every step.
 scene: In the hedge maze you try a path, hit a dead end, and carefully retrace every step — undoing footprints as you go.
 triggers: [all combinations, permutations, subsets, generate, n-queens, valid arrangements]
 viz: backtracking
-order: 3
+order: 5
 ---
 
 ## Ask yourself

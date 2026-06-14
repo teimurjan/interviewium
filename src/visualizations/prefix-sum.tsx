@@ -3,8 +3,9 @@ import { motion } from "motion/react";
 import { PlaybackBar, usePlayback } from "./playback";
 
 /**
- * Prefix sum — the running totals fill in left to right, then a range query is
- * answered in one subtraction: sum(i..j) = pre[j] − pre[i−1].
+ * Prefix sum — each running total is built from the one before it plus the next
+ * value (pre[i] = pre[i−1] + a[i]), filling left to right. Once built, any range
+ * total is one subtraction: sum(i..j) = pre[j] − pre[i−1].
  */
 const VALUES = [3, 1, 4, 1, 5, 2];
 const PREFIX = VALUES.reduce<number[]>((acc, v, i) => [...acc, (acc[i - 1] ?? 0) + v], []);
@@ -20,6 +21,7 @@ export default function PrefixSum() {
   const pb = usePlayback(STEPS, 1900);
   const step = pb.step;
   const query = step === VALUES.length;
+  const cur = query ? -1 : step; // index of the prefix being computed this step
   const filled = query ? VALUES.length : step + 1;
   const rowWidth = VALUES.length * CELL + (VALUES.length - 1) * GAP;
 
@@ -29,6 +31,7 @@ export default function PrefixSum() {
         <Tag y={-2} text="a" />
         {VALUES.map((v, idx) => {
           const inRange = query && idx >= QI && idx <= QJ;
+          const adding = idx === cur; // the value being added into the running total
           return (
             <div
               key={`v${idx}`}
@@ -36,9 +39,9 @@ export default function PrefixSum() {
                 ...cell,
                 top: 0,
                 left: idx * STRIDE,
-                background: inRange ? "var(--accent-soft)" : "var(--surface-2)",
-                borderColor: inRange ? "var(--accent)" : "var(--line)",
-                color: inRange ? "var(--accent-ink)" : "var(--ink-2)",
+                background: inRange || adding ? "var(--accent-soft)" : "var(--surface-2)",
+                borderColor: inRange || adding ? "var(--accent)" : "var(--line)",
+                color: inRange || adding ? "var(--accent-ink)" : "var(--ink-2)",
                 transition: "background .3s, border-color .3s, color .3s",
               }}
             >
@@ -51,18 +54,30 @@ export default function PrefixSum() {
         {PREFIX.map((p, idx) => {
           const shown = idx < filled;
           const isEndpoint = query && (idx === QJ || idx === QI - 1);
+          const isNew = idx === cur; // running total just computed this step
+          const isPrev = !query && idx === cur - 1; // pre[i−1] feeding the sum
+          const stroke = isEndpoint || isNew
+            ? "var(--correct)"
+            : isPrev
+              ? "var(--accent)"
+              : "var(--line)";
+          const fill = isEndpoint || isNew
+            ? "var(--correct-soft)"
+            : isPrev
+              ? "var(--accent-soft)"
+              : "var(--surface)";
           return (
             <motion.div
               key={`p${idx}`}
               initial={false}
-              animate={{ opacity: shown ? 1 : 0.18, scale: shown ? 1 : 0.85 }}
+              animate={{ opacity: shown ? 1 : 0.18, scale: isNew ? 1.08 : shown ? 1 : 0.85 }}
               transition={{ type: "spring", stiffness: 320, damping: 24 }}
               style={{
                 ...cell,
                 top: CELL + 24,
                 left: idx * STRIDE,
-                background: isEndpoint ? "var(--correct-soft)" : "var(--surface)",
-                borderColor: isEndpoint ? "var(--correct)" : "var(--line)",
+                background: fill,
+                borderColor: stroke,
                 color: "var(--ink)",
               }}
             >
@@ -78,8 +93,15 @@ export default function PrefixSum() {
             sum({QI}..{QJ}) = pre[{QJ}] − pre[{QI - 1}] = {PREFIX[QJ]} − {PREFIX[QI - 1]} ={" "}
             <span className="viz-num">{RESULT}</span>
           </>
+        ) : cur === 0 ? (
+          <>
+            pre[0] = a[0] = <span className="viz-num">{PREFIX[0]}</span>
+          </>
         ) : (
-          <>building running totals…</>
+          <>
+            pre[{cur}] = pre[{cur - 1}] + a[{cur}] = {PREFIX[cur - 1]} + {VALUES[cur]} ={" "}
+            <span className="viz-num">{PREFIX[cur]}</span>
+          </>
         )}
       </div>
       <PlaybackBar {...pb} />

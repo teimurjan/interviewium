@@ -26,7 +26,7 @@ export function usePlayback(steps: number, baseMs = 2200): Playback {
 
   useEffect(() => {
     if (reduce || !playing || steps <= 1) return;
-    const id = setInterval(() => setStep((s) => (s + 1) % steps), baseMs / speed);
+    const id = setInterval(() => setStep((s) => (s + 1) % steps), (baseMs * 2) / speed);
     return () => clearInterval(id);
   }, [reduce, playing, speed, steps, baseMs]);
 

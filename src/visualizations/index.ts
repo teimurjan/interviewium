@@ -26,7 +26,9 @@ import LinkedList from "./linked-list";
 import StringMatching from "./string-matching";
 import Trie from "./trie";
 import TreeBfs from "./tree-bfs";
-import TreeDfs from "./tree-dfs";
+import TreePreorder from "./tree-preorder";
+import TreeInorder from "./tree-inorder";
+import TreePostorder from "./tree-postorder";
 import Backtracking from "./backtracking";
 
 /**
@@ -62,6 +64,8 @@ export const visualizations: Record<string, ComponentType> = {
   "string-matching": StringMatching,
   trie: Trie,
   "tree-bfs": TreeBfs,
-  "tree-dfs": TreeDfs,
+  "tree-preorder": TreePreorder,
+  "tree-inorder": TreeInorder,
+  "tree-postorder": TreePostorder,
   backtracking: Backtracking,
 };

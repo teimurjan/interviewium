@@ -3,10 +3,11 @@ import { AnimatePresence, motion } from "motion/react";
 import { PlaybackBar, usePlayback } from "./playback";
 
 /**
- * Subset generation for [1,2,3] via depth-first backtracking. At each element
- * we decide include/exclude, descending a decision tree; reaching a leaf emits
- * the built subset to the results strip, then we backtrack — undoing the last
- * choice. Every decision/emit/backtrack is one precomputed, deterministic step.
+ * Generating every subset of {1,2,3} via depth-first backtracking. We walk the
+ * source set left to right; at each element we decide include/exclude, descending
+ * a decision tree. Reaching the end emits the chosen subset to results, then we
+ * backtrack — undoing the last include to explore the other branch. Every
+ * decision/emit/backtrack is one precomputed, deterministic step.
  */
 const ELEMENTS = [1, 2, 3] as const;
 
@@ -57,9 +58,35 @@ export default function Backtracking() {
 
   return (
     <div style={root}>
+      <div style={caption}>
+        every subset of <span className="mono" style={{ color: "var(--ink-2)" }}>{fmt([...ELEMENTS])}</span>
+      </div>
+
+      <div style={sourceRow}>
+        {ELEMENTS.map((n) => {
+          const included = partial.includes(n);
+          const deciding = element === n;
+          return (
+            <motion.span
+              key={n}
+              animate={{
+                background: included ? "var(--accent-soft)" : "var(--surface-2)",
+                borderColor: deciding ? "var(--accent)" : included ? "var(--accent-line)" : "var(--line)",
+                color: included ? "var(--ink)" : "var(--ink-3)",
+                scale: deciding ? 1.12 : 1,
+              }}
+              transition={{ type: "spring", stiffness: 320, damping: 22 }}
+              style={sourceChip}
+            >
+              {n}
+            </motion.span>
+          );
+        })}
+      </div>
+
       <div style={builderRow}>
         <span className="mono" style={{ color: "var(--ink-3)", fontSize: 12 }}>
-          building
+          current subset
         </span>
         <motion.div
           animate={{
@@ -78,7 +105,7 @@ export default function Backtracking() {
                 exit={{ opacity: 0 }}
                 style={{ fontFamily: "var(--mono)", fontSize: 13, color: "var(--ink-3)" }}
               >
-                {fmt([])}
+                {fmt([])} <span style={{ fontSize: 11 }}>empty</span>
               </motion.span>
             ) : (
               partial.map((n) => (
@@ -129,18 +156,18 @@ export default function Backtracking() {
         )}
         {kind === "exclude" && (
           <>
-            exclude <span className="viz-num">{element}</span> →{" "}
+            skip <span className="viz-num">{element}</span> →{" "}
             <span className="mono">{fmt(partial)}</span>
           </>
         )}
         {kind === "leaf" && (
           <>
-            leaf → emit <span className="mono">{fmt(partial)}</span>
+            decided all → emit <span className="mono">{fmt(partial)}</span>
           </>
         )}
         {kind === "backtrack" && (
           <>
-            backtrack <span className="viz-num">{element}</span>
+            backtrack — undo <span className="viz-num">{element}</span>
           </>
         )}
       </div>
@@ -155,7 +182,31 @@ const root: CSSProperties = {
   flexDirection: "column",
   justifyContent: "center",
   alignItems: "center",
-  gap: 18,
+  gap: 16,
+};
+
+const caption: CSSProperties = {
+  fontSize: 13,
+  color: "var(--ink-3)",
+};
+
+const sourceRow: CSSProperties = {
+  display: "flex",
+  alignItems: "center",
+  gap: 8,
+  justifyContent: "center",
+};
+
+const sourceChip: CSSProperties = {
+  minWidth: 30,
+  height: 30,
+  display: "grid",
+  placeItems: "center",
+  borderRadius: 8,
+  border: "1px solid var(--line)",
+  fontFamily: "var(--mono)",
+  fontSize: 14,
+  fontWeight: 600,
 };
 
 const builderRow: CSSProperties = {
